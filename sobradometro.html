@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Casa Alto Padrão - Núcleo Bandeirante - Favoritta Imóveis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* ===== Theme: Preto + Dourado ===== */
+      :root {
+        --bg: #0b0b0c;
+        --bg-alt: #121214;
+        --text: #e9e9ec;
+        --muted: #b1b1b8;
+        --gold: #d4af37;
+        --gold-2: #c49b1f;
+        --card: #17171a;
+        --stroke: #232327;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      a {
+        color: inherit;
+      }
+
+      /* Layout */
+      .container {
+        width: min(1120px, 92%);
+        margin: 0 auto;
+      }
+      .section {
+        padding: 48px 0;
+      }
+      .section.alt {
+        background: #0f0f11;
+        border-top: 1px solid var(--stroke);
+        border-bottom: 1px solid var(--stroke);
+      }
+      .section-head {
+        text-align: center;
+        margin-bottom: 18px;
+      }
+      .section-head h2 {
+        margin: 0 0 6px;
+        font-size: clamp(22px, 3vw, 32px);
+      }
+      .section-head p {
+        color: var(--muted);
+      }
+      .muted {
+        color: var(--muted);
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 18px;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        text-decoration: none;
+        color: #111;
+        background: var(--gold);
+        font-weight: 700;
+        transition: transform 0.15s ease, opacity 0.2s ease,
+          background 0.2s ease;
+        cursor: pointer;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+      .btn-outline {
+        background: transparent;
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .btn-ghost {
+        background: transparent;
+        border-color: var(--stroke);
+        color: var(--text);
+      }
+      .btn-primary {
+        background: var(--gold);
+        color: #111;
+      }
+
+      /* Header / Nav */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(8px);
+        background: color-mix(in oklab, var(--bg), transparent 35%);
+        border-bottom: 1px solid var(--stroke);
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+      }
+      .logo-mark {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--gold), var(--gold-2));
+        color: #111;
+        font-weight: 900;
+      }
+      .logo-text strong {
+        color: var(--gold);
+      }
+
+      .menu {
+        list-style: none;
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+      }
+      .menu a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        padding: 10px 12px;
+        border-radius: 8px;
+      }
+      .menu a:hover,
+      .menu a.active {
+        background: var(--card);
+      }
+      .has-sub {
+        position: relative;
+      }
+      .sub {
+        position: absolute;
+        top: 110%;
+        left: 0;
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-radius: 12px;
+        padding: 8px;
+        display: none;
+        min-width: 180px;
+        box-shadow: 0 10px, 30px rgba(0, 0, 0, 0.4);
+      }
+      .has-sub:hover .sub {
+        display: block;
+      }
+      .sub li {
+        list-style: none;
+      }
+      .sub a {
+        display: block;
+        padding: 10px 12px;
+      }
+
+      /* Hero */
+      .hero {
+        background: radial-gradient(
+            1200px 600px at 10% -10%,
+            rgba(212, 175, 55, 0.15),
+            transparent 60%
+          ),
+          radial-gradient(
+            1200px 600px at 110% 10%,
+            rgba(212, 175, 55, 0.12),
+            transparent 60%
+          ),
+          var(--bg-alt);
+        border-bottom: 1px solid var(--stroke);
+      }
+      .hero-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 60px 0;
+      }
+      .hero h1 {
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.1;
+        margin: 0 0 8px;
+      }
+      .hero p {
+        color: var(--muted);
+        margin: 0 0 20px;
+        max-width: 600px;
+      }
+      .hero-contact {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .hero-contact .phone {
+        color: var(--gold);
+        font-weight: 800;
+        text-decoration: none;
+        background: rgba(212, 175, 55, 0.1);
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--gold);
+      }
+
+      /* Image Gallery */
+      .gallery-container {
+        position: relative;
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .gallery-slides {
+        display: flex;
+        transition: transform 0.5s ease;
+        height: 500px;
+      }
+
+      .gallery-slide {
+        min-width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
+      .gallery-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: zoom-in;
+      }
+
+      .gallery-controls {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+        padding: 0 20px;
+        z-index: 10;
+      }
+
+      .gallery-control {
+        background: rgba(0, 0, 0, 0.5);
+        color: var(--gold);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.5rem;
+        transition: background 0.3s;
+      }
+
+      .gallery-control:hover {
+        background: rgba(0, 0, 0, 0.8);
+      }
+
+      .gallery-dots {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        gap: 10px;
+      }
+
+      .gallery-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--muted);
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .gallery-dot.active {
+        background: var(--gold);
+      }
+
+      /* Modal for zoomed image */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        overflow: hidden;
+      }
+
+      .modal-content {
+        display: block;
+        margin: auto;
+        max-width: 90%;
+        max-height: 90%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        object-fit: contain;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: white;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 101;
+      }
+
+      /* Property Detail */
+      .property-detail {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-top: 30px;
+      }
+
+      .property-info {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .property-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+        margin: 15px 0;
+      }
+
+      .property-feature {
+        background: var(--card);
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      .property-feature span {
+        display: block;
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+      }
+
+      .property-description {
+        line-height: 1.6;
+        background: var(--card);
+        padding: 20px;
+        border-radius: 12px;
+      }
+
+      .back-to-vendas {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+        color: var(--gold);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .back-to-vendas:hover {
+        text-decoration: underline;
+      }
+
+      /* Footer */
+      .site-footer {
+        border-top: 1px solid var(--stroke);
+        background: #0a0a0b;
+        padding: 40px 0 20px;
+      }
+      .footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: space-between;
+      }
+      .footer-col {
+        flex: 1;
+        min-width: 250px;
+      }
+      .footer-col h3 {
+        color: var(--gold);
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+      }
+      .footer-col p,
+      .footer-col a {
+        color: var(--muted);
+        margin-bottom: 8px;
+        display: block;
+        text-decoration: none;
+      }
+      .footer-col a:hover {
+        color: var(--gold);
+      }
+      .footer-socials {
+        display: flex;
+        gap: 12px;
+        margin-top: 15px;
+      }
+      .footer-socials a {
+        color: var(--gold);
+        text-decoration: none;
+        font-size: 1.5rem;
+      }
+      .footer-bottom {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid var(--stroke);
+        text-align: center;
+        width: 100%;
+      }
+
+      /* Map */
+      .footer-map {
+        height: 150px;
+        background: var(--card);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .footer-map iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* WhatsApp Float */
+      .whatsapp-float {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        width: 56px;
+        height: 56px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background: var(--gold);
+        color: #111;
+        border: 1px solid var(--gold-2);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        text-decoration: none;
+        z-index: 60;
+      }
+
+      /* Responsive */
+      @media (max-width: 920px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+        }
+        .property-detail {
+          grid-template-columns: 1fr;
+        }
+        .footer-inner {
+          flex-direction: column;
+          gap: 30px;
+        }
+        .gallery-slides {
+          height: 400px;
+        }
+      }
+      @media (max-width: 600px) {
+        .menu {
+          gap: 8px;
+        }
+        .menu a {
+          padding: 8px 8px;
+        }
+        .property-features {
+          grid-template-columns: 1fr 1fr;
+        }
+        .gallery-slides {
+          height: 300px;
+        }
+        .gallery-control {
+          width: 40px;
+          height: 40px;
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <!-- SUBSTITUIR LOGO AQUI -->
+        <div class="logo">
+          <span class="logo-mark">F</span>
+          <span class="logo-text">Favoritta <strong>Imóveis</strong></span>
+        </div>
+        <nav class="nav">
+          <ul class="menu">
+            <li><a href="index.html">Início</a></li>
+            <li class="has-sub">
+              <a href="venda.html" class="active">Imóveis</a>
+              <ul class="sub">
+                <li><a href="venda.html">Venda</a></li>
+                <li><a href="aluguel.html">Aluguel</a></li>
+              </ul>
+            </li>
+            <li><a href="anuncie.html">Anuncie seu Imóvel</a></li>
+            <li><a href="contato.html">Contato</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <a href="venda.html" class="back-to-vendas">
+          <i class="fas fa-arrow-left"></i> Voltar para Imóveis à Venda
+        </a>
+
+        <div class="property-detail">
+          <div class="gallery-container">
+            <div class="gallery-slides">
+              <!-- SUBSTITUIR IMAGEM 1 AQUI -->
+              <div class="gallery-slide">
+                <img
+                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80"
+                  alt="Fachada da Casa"
+                />
+              </div>
+              <!-- SUBSTITUIR IMAGEM 2 AQUI -->
+              <div class="gallery-slide">
+                <img
+                  src="https://images.unsplash.com/photo-1600566753052-d04f656ee7c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80"
+                  alt="Sala de Estar"
+                />
+              </div>
+              <!-- SUBSTITUIR IMAGEM 3 AQUI -->
+              <div class="gallery-slide">
+                <img
+                  src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80"
+                  alt="Cozinha"
+                />
+              </div>
+              <!-- SUBSTITUIR IMAGEM 4 AQUI -->
+              <div class="gallery-slide">
+                <img
+                  src="https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80"
+                  alt="Quarto Principal"
+                />
+              </div>
+              <!-- SUBSTITUIR IMAGEM 5 AQUI -->
+              <div class="gallery-slide">
+                <img
+                  src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80"
+                  alt="Área Externa"
+                />
+              </div>
+            </div>
+
+            <div class="gallery-controls">
+              <button class="gallery-control prev-btn">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="gallery-control next-btn">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <div class="gallery-dots">
+              <div class="gallery-dot active" data-index="0"></div>
+              <div class="gallery-dot" data-index="1"></div>
+              <div class="gallery-dot" data-index="2"></div>
+              <div class="gallery-dot" data-index="3"></div>
+              <div class="gallery-dot" data-index="4"></div>
+            </div>
+          </div>
+
+          <div class="property-info">
+            <div>
+              <span class="badge">Venda</span>
+              <h1>Casa Alto Padrão - Núcleo Bandeirante</h1>
+              <h2 style="color: var(--gold); margin: 10px 0">R$ 1.450.000</h2>
+              <p class="muted">Núcleo Bandeirante, Brasília - DF</p>
+            </div>
+
+            <div class="property-features">
+              <div class="property-feature">
+                <span>🛏</span>
+                3 Quartos
+              </div>
+              <div class="property-feature">
+                <span>🛁</span>
+                3 Banheiros
+              </div>
+              <div class="property-feature">
+                <span>🚗</span>
+                2 Vagas
+              </div>
+              <div class="property-feature">
+                <span>📐</span>
+                240 m²
+              </div>
+            </div>
+
+            <div class="property-description">
+              <h3>Descrição do Imóvel</h3>
+              <!-- EDITAR DESCRIÇÃO AQUI -->
+              <p>
+                Excelente casa no Núcleo Bandeirante, com projeto amplo e
+                iluminado. Localização privilegiada, próxima a comércios,
+                escolas e áreas de lazer.
+              </p>
+
+              <p>
+                A casa conta com 3 suítes, sendo uma suíte master com closet,
+                sala ampla, cozinha planejada com armários, área de serviço,
+                varanda gourmet e jardim.
+              </p>
+
+              <p>
+                Acabamento de alto padrão com piso porcelanato, janelas em
+                alumínio, sistema de segurança e garagem coberta para 2 carros.
+              </p>
+
+              <p>
+                Ótima oportunidade para quem busca conforto, privacidade e
+                qualidade de vida.
+              </p>
+            </div>
+
+            <div class="card-actions">
+              <a
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener"
+                href="https://wa.me/message/EKYITSLUSBTZG1"
+              >
+                <i class="fab fa-whatsapp"></i> Entrar em contato
+              </a>
+              <a class="btn btn-outline" href="venda.html">
+                <i class="fas fa-home"></i> Ver outros imóveis
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal for zoomed image -->
+    <div class="modal" id="imageModal">
+      <span class="close-modal">&times;</span>
+      <img class="modal-content" id="zoomedImage" />
+    </div>
+
+    <!-- ===== INÍCIO DO RODAPÉ - COPIAR A PARTIR DAQUI ===== -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <div class="footer-col">
+            <h3>Favoritta Imóveis</h3>
+            <p>Encontre o imóvel dos seus sonhos com a gente!</p>
+            <div class="footer-socials">
+              <!-- Instagram -->
+              <a
+                href="https://www.instagram.com/favorittaimoveisdf"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <!-- Facebook -->
+              <a
+                href="https://www.facebook.com/profile.php?id=61556685129294"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fab fa-facebook"></i>
+              </a>
+              <!-- WhatsApp -->
+              <a
+                href="https://wa.me/message/EKYITSLUSBTZG1"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h3>Contato</h3>
+            <p><i class="fas fa-phone"></i> (61) 9 9592-4869</p>
+            <p><i class="fas fa-phone"></i> (61) 3441-4000</p>
+            <p><i class="fab fa-whatsapp"></i> WhatsApp</p>
+            <p><i class="fas fa-envelope"></i> favorittaimoveis.df@gmail.com</p>
+          </div>
+
+          <div class="footer-col">
+            <h3>Horário de Atendimento</h3>
+            <p><i class="fas fa-clock"></i> Segunda a Sexta: 09:00 às 17:00</p>
+            <p><i class="fas fa-clock"></i> Sábado: 09:00 às 12:00</p>
+          </div>
+
+          <div class="footer-col">
+            <h3>Localização</h3>
+            <p>
+              <i class="fas fa-map-marker-alt"></i> Av. Central, 1226 - SALA 201
+            </p>
+            <p>Núcleo Bandeirante, Brasília - DF</p>
+            <div class="footer-map">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d245795.5201539936!2d-48.11710134999999!3d-15.721275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a3d18df9ae275%3A0x738470e469754a24!2zQnJhc8OtbGlhLCBERg!5e0!3m2!1spt-BR!2sbr!4v1653933513338!5m2!1spt-BR!2sbr"
+                allowfullscreen=""
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            © <span id="year"></span> Favoritta Imóveis — Todos os direitos
+            reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- ===== FIM DO RODAPÉ - COPIAR ATÉ AQUI ===== -->
+
+    <!-- WhatsApp Float (não faz parte do rodapé, mas precisa estar na página) -->
+    <a
+      href="https://wa.me/message/EKYITSLUSBTZG1"
+      class="whatsapp-float"
+      target="_blank"
+      rel="noopener"
+      aria-label="WhatsApp"
+    >
+      <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Script do ano (não faz parte do rodapé, mas precisa estar na página) -->
+    <script>
+      // Footer year
+      document.addEventListener("DOMContentLoaded", function () {
+        const y = document.getElementById("year");
+        if (y) y.textContent = new Date().getFullYear();
+      });
+    </script>
+
+    <script>
+      // Footer year
+      document.addEventListener("DOMContentLoaded", function () {
+        const y = document.getElementById("year");
+        if (y) y.textContent = new Date().getFullYear();
+
+        // Initialize gallery
+        initGallery();
+      });
+
+      // Gallery functionality
+      function initGallery() {
+        const slides = document.querySelector(".gallery-slides");
+        const slidesCount = document.querySelectorAll(".gallery-slide").length;
+        const prevBtn = document.querySelector(".prev-btn");
+        const nextBtn = document.querySelector(".next-btn");
+        const dots = document.querySelectorAll(".gallery-dot");
+        const modal = document.getElementById("imageModal");
+        const zoomedImg = document.getElementById("zoomedImage");
+        const closeModal = document.querySelector(".close-modal");
+
+        let currentSlide = 0;
+
+        // Function to update slide position
+        function updateSlide() {
+          slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+          // Update dots
+          dots.forEach((dot, index) => {
+            if (index === currentSlide) {
+              dot.classList.add("active");
+            } else {
+              dot.classList.remove("active");
+            }
+          });
+        }
+
+        // Next slide
+        nextBtn.addEventListener("click", () => {
+          currentSlide = (currentSlide + 1) % slidesCount;
+          updateSlide();
+        });
+
+        // Previous slide
+        prevBtn.addEventListener("click", () => {
+          currentSlide = (currentSlide - 1 + slidesCount) % slidesCount;
+          updateSlide();
+        });
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+          dot.addEventListener("click", () => {
+            currentSlide = index;
+            updateSlide();
+          });
+        });
+
+        // Keyboard navigation
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowRight") {
+            currentSlide = (currentSlide + 1) % slidesCount;
+            updateSlide();
+          } else if (e.key === "ArrowLeft") {
+            currentSlide = (currentSlide - 1 + slidesCount) % slidesCount;
+            updateSlide();
+          } else if (e.key === "Escape") {
+            modal.style.display = "none";
+          }
+        });
+
+        // Image zoom functionality
+        document.querySelectorAll(".gallery-slide img").forEach((img) => {
+          img.addEventListener("click", () => {
+            modal.style.display = "block";
+            zoomedImg.src = img.src;
+          });
+        });
+
+        // Close modal
+        closeModal.addEventListener("click", () => {
+          modal.style.display = "none";
+        });
+
+        // Close modal when clicking outside
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+
+        // Auto slide every 5 seconds
+        setInterval(() => {
+          currentSlide = (currentSlide + 1) % slidesCount;
+          updateSlide();
+        }, 5000);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favoritta Imóveis</title>
+    <head>
+      <!-- Outras tags aqui... -->
+
+      <!-- LINK DO FONT AWESOME (IMPORTANTE PARA OS ÍCONES) -->
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      />
+
+      <!-- Seus outros links de estilo aqui... -->
+    </head>
+    <style>
+      /* ===== Theme: Preto + Dourado ===== */
+      :root {
+        --bg: #0b0b0c;
+        --bg-alt: #121214;
+        --text: #e9e9ec;
+        --muted: #b1b1b8;
+        --gold: #d4af37;
+        --gold-2: #c49b1f;
+        --card: #17171a;
+        --stroke: #232327;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      a {
+        color: inherit;
+      }
+
+      /* Layout */
+      .container {
+        width: min(1120px, 92%);
+        margin: 0 auto;
+      }
+      .section {
+        padding: 48px 0;
+      }
+      .section.alt {
+        background: #0f0f11;
+        border-top: 1px solid var(--stroke);
+        border-bottom: 1px solid var(--stroke);
+      }
+      .section-head {
+        text-align: center;
+        margin-bottom: 18px;
+      }
+      .section-head h2 {
+        margin: 0 0 6px;
+        font-size: clamp(22px, 3vw, 32px);
+      }
+      .section-head p {
+        color: var(--muted);
+      }
+      .muted {
+        color: var(--muted);
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 18px;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        text-decoration: none;
+        color: #111;
+        background: var(--gold);
+        font-weight: 700;
+        transition: transform 0.15s ease, opacity 0.2s ease,
+          background 0.2s ease;
+        cursor: pointer;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+      .btn-outline {
+        background: transparent;
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .btn-ghost {
+        background: transparent;
+        border-color: var(--stroke);
+        color: var(--text);
+      }
+      .btn-primary {
+        background: var(--gold);
+        color: #111;
+      }
+
+      /* Header / Nav */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(8px);
+        background: color-mix(in oklab, var(--bg), transparent 35%);
+        border-bottom: 1px solid var(--stroke);
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+      }
+      .logo-mark {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--gold), var(--gold-2));
+        color: #111;
+        font-weight: 900;
+      }
+      .logo-text strong {
+        color: var(--gold);
+      }
+
+      .menu {
+        list-style: none;
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+      }
+      .menu a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        padding: 10px 12px;
+        border-radius: 8px;
+      }
+      .menu a:hover,
+      .menu a.active {
+        background: var(--card);
+      }
+      .has-sub {
+        position: relative;
+      }
+      .sub {
+        position: absolute;
+        top: 110%;
+        left: 0;
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-radius: 12px;
+        padding: 8px;
+        display: none;
+        min-width: 180px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      }
+      .has-sub:hover .sub {
+        display: block;
+      }
+      .sub li {
+        list-style: none;
+        margin: 0;
+      }
+      .sub a {
+        display: block;
+        padding: 10px 12px;
+      }
+
+      /* Hero */
+      .hero {
+        background: radial-gradient(
+            1200px 600px at 10% -10%,
+            rgba(212, 175, 55, 0.15),
+            transparent 60%
+          ),
+          radial-gradient(
+            1200px 600px at 110% 10%,
+            rgba(212, 175, 55, 0.12),
+            transparent 60%
+          ),
+          var(--bg-alt);
+        border-bottom: 1px solid var(--stroke);
+      }
+      .hero-inner {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 28px;
+        padding: 60px 0;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.1;
+        margin: 0 0 8px;
+      }
+      .hero p {
+        color: var(--muted);
+        margin: 0 0 20px;
+      }
+      .hero-contact {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .hero-contact .phone {
+        color: var(--gold);
+        font-weight: 800;
+        text-decoration: none;
+        background: rgba(212, 175, 55, 0.1);
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--gold);
+      }
+
+      /* Search */
+      .search-card {
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        padding: 18px;
+        border-radius: 16px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .search-card h3 {
+        margin: 0 0 8px;
+        grid-column: 1 / -1;
+      }
+      .search-card label {
+        display: grid;
+        gap: 6px;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .search-card input,
+      .search-card select {
+        background: #0f0f11;
+        color: var(--text);
+        border: 1px solid var(--stroke);
+        border-radius: 10px;
+        padding: 10px 12px;
+        width: 100%;
+      }
+
+      /* Custom select styles */
+      .custom-select-wrapper {
+        position: relative;
+      }
+
+      .custom-select {
+        position: relative;
+        display: block;
+        width: 100%;
+        background: #0f0f11;
+        color: var(--text);
+        border: 1px solid var(--stroke);
+        border-radius: 10px;
+        padding: 10px 12px;
+        cursor: pointer;
+      }
+
+      .custom-select__trigger {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .custom-options {
+        position: absolute;
+        display: none;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-top: none;
+        border-radius: 0 0 10px 10px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 10;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .custom-option {
+        position: relative;
+        display: block;
+        padding: 10px 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .custom-option:hover {
+        background-color: var(--gold);
+        color: #111;
+      }
+
+      .custom-option.selected {
+        background-color: var(--gold);
+        color: #111;
+      }
+
+      .arrow {
+        position: relative;
+        height: 10px;
+        width: 10px;
+      }
+
+      .arrow::before,
+      .arrow::after {
+        content: "";
+        position: absolute;
+        bottom: 0px;
+        width: 0.15rem;
+        height: 100%;
+        transition: all 0.3s;
+      }
+
+      .arrow::before {
+        left: -2px;
+        transform: rotate(45deg);
+        background-color: var(--text);
+      }
+
+      .arrow::after {
+        left: 2px;
+        transform: rotate(-45deg);
+        background-color: var(--text);
+      }
+
+      .open .arrow::before {
+        left: -2px;
+        transform: rotate(-45deg);
+      }
+
+      .open .arrow::after {
+        left: 2px;
+        transform: rotate(45deg);
+      }
+
+      .open .custom-options {
+        display: block;
+      }
+
+      .selected-items {
+        margin-top: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+
+      .selected-item {
+        background-color: var(--gold);
+        color: #111;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .selected-item .remove {
+        margin-left: 5px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .search-info {
+        margin-top: 10px;
+        grid-column: 1/-1;
+        font-size: 0.9rem;
+        color: var(--gold);
+      }
+
+      /* Cards */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-radius: 14px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .thumb {
+        background: linear-gradient(135deg, #26262b, #1a1a1f);
+        height: 200px;
+        display: block;
+        width: 100%;
+        object-fit: cover;
+      }
+      .card-body {
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .card h3 {
+        margin: 6px 0;
+        font-size: 1rem;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 0;
+      }
+      .features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: var(--gold);
+        color: #111;
+        font-weight: 600;
+        font-size: 0.75rem;
+      }
+      .badge.alt {
+        background: #2dd4bf;
+        color: #0b0b0c;
+      }
+      .price {
+        font-weight: 800;
+        color: var(--gold);
+        margin-top: 4px;
+      }
+      .card-actions {
+        margin-top: 10px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      /* Footer */
+      .site-footer {
+        border-top: 1px solid var(--stroke);
+        background: #0a0a0b;
+        padding: 40px 0 20px;
+      }
+      .footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: space-between;
+      }
+      .footer-col {
+        flex: 1;
+        min-width: 250px;
+      }
+      .footer-col h3 {
+        color: var(--gold);
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+      }
+      .footer-col p,
+      .footer-col a {
+        color: var(--muted);
+        margin-bottom: 8px;
+        display: block;
+        text-decoration: none;
+      }
+      .footer-col a:hover {
+        color: var(--gold);
+      }
+      .footer-socials {
+        display: flex;
+        gap: 12px;
+        margin-top: 15px;
+        font-size: 1.5rem;
+      }
+      .footer-socials a {
+        color: var(--gold);
+        text-decoration: none;
+      }
+      .footer-bottom {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid var(--stroke);
+        text-align: center;
+        width: 100%;
+      }
+
+      /* Map */
+      .footer-map {
+        height: 150px;
+        background: var(--card);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .footer-map iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* WhatsApp Float */
+      .whatsapp-float {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        width: 56px;
+        height: 56px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background: var(--gold);
+        color: #111;
+        border: 1px solid var(--gold-2);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        text-decoration: none;
+        z-index: 60;
+      }
+
+      /* Responsive */
+      @media (max-width: 920px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+        }
+        .search-card {
+          grid-template-columns: 1fr 1fr;
+        }
+        .cards {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .footer-inner {
+          flex-direction: column;
+          gap: 30px;
+        }
+      }
+      @media (max-width: 600px) {
+        .menu {
+          gap: 8px;
+        }
+        .menu a {
+          padding: 8px 8px;
+        }
+        .search-card {
+          grid-template-columns: 1fr;
+        }
+        .cards {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Tabs */
+      .category-tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+        gap: 10px;
+      }
+      .tab-btn {
+        padding: 10px 20px;
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        color: var(--text);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .tab-btn:hover {
+        background: var(--gold);
+        color: #111;
+      }
+      .tab-btn.active {
+        background: var(--gold);
+        color: #111;
+        border-color: var(--gold);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <!-- SUBSTITUIR LOGO AQUI -->
+        <div class="logo">
+          <img
+            src="img/logo-favoritta.jpg"
+            alt="Favoritta Imóveis"
+            class="logo-image"
+            style="height: 100px"
+          />
+          <!-- Remova o texto se quiser só a imagem -->
+          <!-- <span class="logo-text">Favoritta <strong>Imóveis</strong></span> -->
+        </div>
+        <nav class="nav">
+          <ul class="menu">
+            <li><a href="index.html" class="active">Início</a></li>
+            <li class="has-sub">
+              <a href="venda.html">Imóveis</a>
+              <ul class="sub">
+                <li><a href="venda.html">Venda</a></li>
+                <li><a href="aluguel.html">Aluguel</a></li>
+              </ul>
+            </li>
+            <li><a href="anuncie.html">Anuncie seu Imóvel</a></li>
+            <li><a href="contato.html">Contato</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section id="inicio" class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1>Encontre o imóvel ideal com a Favoritta</h1>
+          <p>
+            Especialistas em <strong>venda</strong> e
+            <strong>aluguel</strong> no DF.
+          </p>
+          <div class="hero-contact">
+            <a class="phone" href="tel:+5561995924869">📞 (61) 9 9592-4869</a>
+            <a
+              class="btn btn-primary"
+              href="https://wa.me/message/EKYITSLUSBTZG1"
+              target="_blank"
+              rel="noopener"
+              >WhatsApp</a
+            >
+          </div>
+        </div>
+
+        <!-- Formulário de busca com seleção múltipla customizada -->
+        <form
+          id="form-busca"
+          class="search-card"
+          onsubmit="event.preventDefault(); applySearch();"
+        >
+          <h3>Buscar Imóvel</h3>
+
+          <!-- Tipo de Imóvel (Select Múltiplo Customizado) -->
+          <label
+            >Tipo de Imóvel
+            <div class="custom-select-wrapper">
+              <div class="custom-select" id="select-tipo">
+                <div class="custom-select__trigger">
+                  <span>Selecione os tipos</span>
+                  <div class="arrow"></div>
+                </div>
+                <div class="custom-options">
+                  <div class="custom-option" data-value="Casa">Casa</div>
+                  <div class="custom-option" data-value="Apartamento">
+                    Apartamento
+                  </div>
+                  <div class="custom-option" data-value="Kitnet">Kitnet</div>
+                  <div class="custom-option" data-value="Loja">Loja</div>
+                  <div class="custom-option" data-value="Sala Comercial">
+                    Sala Comercial
+                  </div>
+                  <div class="custom-option" data-value="Lote">Lote</div>
+                </div>
+              </div>
+              <div class="selected-items" id="selected-tipo"></div>
+            </div>
+          </label>
+
+          <!-- Bairro (Select Múltiplo Customizado) -->
+          <label
+            >Bairro
+            <div class="custom-select-wrapper">
+              <div class="custom-select" id="select-bairro">
+                <div class="custom-select__trigger">
+                  <span>Selecione os bairros</span>
+                  <div class="arrow"></div>
+                </div>
+                <div class="custom-options">
+                  <div class="custom-option" data-value="Águas Claras">
+                    Águas Claras
+                  </div>
+                  <div class="custom-option" data-value="Asa Norte">
+                    Asa Norte
+                  </div>
+                  <div class="custom-option" data-value="Asa Sul">Asa Sul</div>
+                  <div class="custom-option" data-value="Brazlândia">
+                    Brazlândia
+                  </div>
+                  <div class="custom-option" data-value="Ceilândia">
+                    Ceilândia
+                  </div>
+                  <div class="custom-option" data-value="Guará">Guará</div>
+                  <div class="custom-option" data-value="Lago Norte">
+                    Lago Norte
+                  </div>
+                  <div class="custom-option" data-value="Lago Sul">
+                    Lago Sul
+                  </div>
+                  <div class="custom-option" data-value="Núcleo Bandeirante">
+                    Núcleo Bandeirante
+                  </div>
+                  <div class="custom-option" data-value="Samambaia">
+                    Samambaia
+                  </div>
+                  <div class="custom-option" data-value="Taguatinga">
+                    Taguatinga
+                  </div>
+                  <div class="custom-option" data-value="Vicente Pires">
+                    Vicente Pires
+                  </div>
+                </div>
+              </div>
+              <div class="selected-items" id="selected-bairro"></div>
+            </div>
+          </label>
+
+          <!-- Quartos (Select Múltiplo Customizado) -->
+          <label
+            >Quartos
+            <div class="custom-select-wrapper">
+              <div class="custom-select" id="select-quartos">
+                <div class="custom-select__trigger">
+                  <span>Selecione a quantidade</span>
+                  <div class="arrow"></div>
+                </div>
+                <div class="custom-options">
+                  <div class="custom-option" data-value="1">1 quarto</div>
+                  <div class="custom-option" data-value="2">2 quartos</div>
+                  <div class="custom-option" data-value="3">3 quartos</div>
+                  <div class="custom-option" data-value="4">
+                    4 quartos ou mais
+                  </div>
+                </div>
+              </div>
+              <div class="selected-items" id="selected-quartos"></div>
+            </div>
+          </label>
+
+          <!-- Venda ou Aluguel (Select Múltiplo Customizado) -->
+          <label
+            >Venda ou Aluguel
+            <div class="custom-select-wrapper">
+              <div class="custom-select" id="select-negociacao">
+                <div class="custom-select__trigger">
+                  <span>Selecione o tipo</span>
+                  <div class="arrow"></div>
+                </div>
+                <div class="custom-options">
+                  <div class="custom-option" data-value="venda">Venda</div>
+                  <div class="custom-option" data-value="aluguel">Aluguel</div>
+                </div>
+              </div>
+              <div class="selected-items" id="selected-negociacao"></div>
+            </div>
+          </label>
+
+          <label
+            >Valor Mínimo (R$)
+            <input
+              id="f-min"
+              type="number"
+              min="0"
+              step="100"
+              placeholder="Ex: 100000"
+            />
+          </label>
+
+          <label
+            >Valor Máximo (R$)
+            <input
+              id="f-max"
+              type="number"
+              min="0"
+              step="100"
+              placeholder="Ex: 500000"
+            />
+          </label>
+
+          <button class="btn btn-primary" type="submit">Buscar</button>
+          <button class="btn btn-ghost" type="button" onclick="clearSearch()">
+            Limpar
+          </button>
+
+          <p class="search-info">
+            Não encontrou o que procura?
+            <a href="https://wa.me/message/EKYITSLUSBTZG1" target="_blank"
+              >Entre em contato</a
+            >
+            para anotar sua preferência!
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <section id="imoveis" class="section">
+      <div class="container">
+        <header class="section-head">
+          <h2>Imóveis em Destaque</h2>
+          <p>Confira nossas melhores oportunidades.</p>
+        </header>
+
+        <div class="category-tabs">
+          <button class="tab-btn active" onclick="filterProperties('all')">
+            Todos
+          </button>
+          <button class="tab-btn" onclick="filterProperties('venda')">
+            Venda
+          </button>
+          <button class="tab-btn" onclick="filterProperties('aluguel')">
+            Aluguel
+          </button>
+        </div>
+
+        <p id="resultado-info" class="muted"></p>
+        <div class="cards" id="cards-container"></div>
+      </div>
+    </section>
+
+    <!-- ===== INÍCIO DO RODAPÉ - COPIAR A PARTIR DAQUI ===== -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <div class="footer-col">
+            <h3>Favoritta Imóveis</h3>
+            <p>Encontre o imóvel dos seus sonhos com a gente!</p>
+            <div class="footer-socials">
+              <!-- Instagram -->
+              <a
+                href="https://www.instagram.com/favorittaimoveisdf"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <!-- Facebook -->
+              <a
+                href="https://www.facebook.com/profile.php?id=61556685129294"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fab fa-facebook"></i>
+              </a>
+              <!-- WhatsApp -->
+              <a
+                href="https://wa.me/message/EKYITSLUSBTZG1"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h3>Contato</h3>
+            <p>
+              <a href="tel:+5561995924869"
+                ><i class="fas fa-phone"></i> (61) 9 9592-4869</a
+              >
+            </p>
+            <p>
+              <a href="tel:+556134414000"
+                ><i class="fas fa-phone"></i> (61) 3441-4000</a
+              >
+            </p>
+            <p>
+              <a href="https://wa.me/message/EKYITSLUSBTZG1"
+                ><i class="fab fa-whatsapp"></i> WhatsApp</a
+              >
+            </p>
+            <p>
+              <a href="mailto:favorittaimoveis.df@gmail.com"
+                ><i class="fas fa-envelope"></i>
+                favorittaimoveis.df@gmail.com</a
+              >
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h3>Horário de Atendimento</h3>
+            <p><i class="fas fa-clock"></i> Segunda a Sexta: 09:00 às 17:00</p>
+            <p><i class="fas fa-clock"></i> Sábado: 09:00 às 12:00</p>
+          </div>
+
+          <div class="footer-col">
+            <h3>Localização</h3>
+            <p>
+              <i class="fas fa-map-marker-alt"></i> Av. Central, 1226 - SALA 201
+            </p>
+            <p>Núcleo Bandeirante, Brasília - DF</p>
+            <div class="footer-map">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d245795.5201539936!2d-48.11710134999999!3d-15.721275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a3d18df9ae275%3A0x738470e469754a24!2zQnJhc8OtbGlhLCBERg!5e0!3m2!1spt-BR!2sbr!4v1653933513338!5m2!1spt-BR!2sbr"
+                allowfullscreen=""
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            © <span id="year"></span> Favoritta Imóveis — Todos os direitos
+            reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- ===== FIM DO RODAPÉ - COPIAR ATÉ AQUI ===== -->
+
+    <!-- WhatsApp Float (não faz parte do rodapé, mas precisa estar na página) -->
+    <a
+      href="https://wa.me/message/EKYITSLUSBTZG1"
+      class="whatsapp-float"
+      target="_blank"
+      rel="noopener"
+      aria-label="WhatsApp"
+    >
+      <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+      // ===== Data and Filters =====
+      // ====== Lista de Imóveis ======
+      const PROPS = [
+        // ===== VENDAS =====
+        {
+          id: 1,
+          neg: "venda",
+          tipo: "Casa",
+          bairro: "Núcleo Bandeirante",
+          titulo: "Casa Alto Padrão – Núcleo Bandeirante",
+          quartos: 5,
+          banheiros: 7,
+          vagas: 2,
+          valor: 1450000,
+          capa: "img/vendecasadealtopadraononb.png", // ✅ coloque a imagem local
+          link: "casaaltopadraonb.html",
+        },
+        {
+          id: 2,
+          neg: "venda",
+          tipo: "Apartamento",
+          bairro: "Núcleo Bandeirante",
+          titulo: "Apartamento – Núcleo Bandeirante",
+          quartos: 3,
+          banheiros: 1,
+          valor: 260000,
+          capa: "img/vendeapnb.png",
+          link: "apartamentoaguasclaras.html",
+        },
+        {
+          id: 3,
+          neg: "venda",
+          tipo: "Casa",
+          bairro: "Núcleo Bandeirante",
+          titulo: "Sobrado – Núcleo Bandeirante",
+          quartos: 7,
+          banheiros: 5,
+          vagas: 2,
+          valor: 950000,
+          capa: "img/vendesobradometro.png",
+          link: "sobradotaguatinga.html",
+        },
+
+        // ===== ALUGUÉIS =====
+        {
+          id: 4,
+          neg: "aluguel",
+          tipo: "Loja",
+          bairro: "Águas Claras",
+          titulo: "Loja de Esquina – Águas Claras",
+          banheiros: 2,
+          area: 100,
+          valor: 2500,
+          capa: "img/alugalojaadeaguasclaras.png",
+          link: "apartamentoasanorte.html",
+        },
+        {
+          id: 5,
+          neg: "aluguel",
+          tipo: "Kitnet",
+          bairro: "Asa Sul",
+          titulo: "Kitnet aconchegante – Asa Sul",
+          desc: "Próxima ao metrô e comércio.",
+          quartos: 1,
+          banheiros: 1,
+          vagas: 0,
+          area: 35,
+          valor: 1500,
+          capa: "img/imovel5.jpg",
+          link: "kitnetasasul.html",
+        },
+        {
+          id: 6,
+          neg: "aluguel",
+          tipo: "Casa",
+          bairro: "Guará",
+          titulo: "Casa térrea – Guará",
+          desc: "Boa localização e quintal grande.",
+          quartos: 3,
+          banheiros: 2,
+          vagas: 2,
+          area: 120,
+          valor: 2800,
+          capa: "img/imovel6.jpg",
+          link: "casaguara.html",
+        },
+      ];
+
+      // Custom select functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize custom selects
+        const customSelects = document.querySelectorAll(".custom-select");
+
+        customSelects.forEach((select) => {
+          const trigger = select.querySelector(".custom-select__trigger");
+          const options = select.querySelectorAll(".custom-option");
+
+          trigger.addEventListener("click", function (e) {
+            e.stopPropagation();
+            select.classList.toggle("open");
+
+            // Close other selects
+            customSelects.forEach((otherSelect) => {
+              if (otherSelect !== select) {
+                otherSelect.classList.remove("open");
+              }
+            });
+          });
+
+          options.forEach((option) => {
+            option.addEventListener("click", function () {
+              option.classList.toggle("selected");
+              updateSelectedItems(select.id);
+            });
+          });
+        });
+
+        // Close selects when clicking outside
+        document.addEventListener("click", function () {
+          customSelects.forEach((select) => {
+            select.classList.remove("open");
+          });
+        });
+
+        // Footer year
+        const y = document.getElementById("year");
+        if (y) y.textContent = new Date().getFullYear();
+
+        renderList("#cards-container");
+      });
+
+      function updateSelectedItems(selectId) {
+        const select = document.getElementById(selectId);
+        const selectedOptions = select.querySelectorAll(
+          ".custom-option.selected"
+        );
+        const selectedItemsContainer = document.getElementById(
+          `selected-${selectId.split("-")[1]}`
+        );
+
+        selectedItemsContainer.innerHTML = "";
+
+        selectedOptions.forEach((option) => {
+          const value = option.getAttribute("data-value");
+          const displayValue = option.textContent;
+
+          const selectedItem = document.createElement("div");
+          selectedItem.className = "selected-item";
+          selectedItem.innerHTML = `${displayValue} <span class="remove" data-value="${value}">×</span>`;
+
+          selectedItemsContainer.appendChild(selectedItem);
+        });
+
+        // Add event listeners to remove buttons
+        const removeButtons =
+          selectedItemsContainer.querySelectorAll(".remove");
+        removeButtons.forEach((button) => {
+          button.addEventListener("click", function (e) {
+            e.stopPropagation();
+            const value = this.getAttribute("data-value");
+            const option = document.querySelector(
+              `#${selectId} .custom-option[data-value="${value}"]`
+            );
+            option.classList.remove("selected");
+            updateSelectedItems(selectId);
+          });
+        });
+      }
+
+      function getSelectedValues(selectId) {
+        const select = document.getElementById(selectId);
+        const selectedOptions = select.querySelectorAll(
+          ".custom-option.selected"
+        );
+        return Array.from(selectedOptions).map((option) =>
+          option.getAttribute("data-value")
+        );
+      }
+
+      function applySearch() {
+        const tipo = getSelectedValues("select-tipo");
+        const bairro = getSelectedValues("select-bairro");
+        const quartos = getSelectedValues("select-quartos");
+        const neg = getSelectedValues("select-negociacao");
+        const min = document.getElementById("f-min").value;
+        const max = document.getElementById("f-max").value;
+
+        const filtered = PROPS.filter((p) => {
+          // Tipo filter
+          if (tipo.length > 0 && !tipo.includes(p.tipo)) return false;
+
+          // Bairro filter
+          if (bairro.length > 0 && !bairro.includes(p.bairro)) return false;
+
+          // Quartos filter
+          if (quartos.length > 0) {
+            let hasMatch = false;
+            for (const q of quartos) {
+              const numQ = parseInt(q);
+              if (numQ === 4 && p.quartos >= 4) hasMatch = true;
+              else if (p.quartos === numQ) hasMatch = true;
+            }
+            if (!hasMatch) return false;
+          }
+
+          // Negociação filter
+          if (neg.length > 0 && !neg.includes(p.neg)) return false;
+
+          // Price filter
+          if (min && p.valor < parseInt(min)) return false;
+          if (max && p.valor > parseInt(max)) return false;
+
+          return true;
+        });
+
+        renderList("#cards-container", filtered);
+      }
+
+      function clearSearch() {
+        // Clear all selected options
+        const allOptions = document.querySelectorAll(".custom-option.selected");
+        allOptions.forEach((option) => {
+          option.classList.remove("selected");
+        });
+
+        // Clear selected items containers
+        document.getElementById("selected-tipo").innerHTML = "";
+        document.getElementById("selected-bairro").innerHTML = "";
+        document.getElementById("selected-quartos").innerHTML = "";
+        document.getElementById("selected-negociacao").innerHTML = "";
+
+        // Clear price inputs
+        document.getElementById("f-min").value = "";
+        document.getElementById("f-max").value = "";
+
+        // Reset to show all properties
+        renderList("#cards-container");
+      }
+
+      function renderList(selector, list = PROPS) {
+        const container = document.querySelector(selector);
+        const infoEl = document.getElementById("resultado-info");
+
+        if (!container) return;
+
+        if (list.length === 0) {
+          container.innerHTML = `<p class="muted">Nenhum imóvel encontrado com os filtros selecionados.</p>`;
+          infoEl.textContent = "0 imóveis encontrados";
+          return;
+        }
+
+        infoEl.textContent = `${list.length} imóvel(ens) encontrado(s)`;
+
+        container.innerHTML = list
+          .map((p) => {
+            const formattedPrice = p.valor.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            });
+
+            // Build features string only if the property exists
+            const features = [];
+            if (p.quartos) features.push(`${p.quartos} quarto(s)`);
+            if (p.banheiros) features.push(`${p.banheiros} banheiro(s)`);
+            if (p.vagas) features.push(`${p.vagas} vaga(s)`);
+            if (p.area) features.push(`${p.area} m²`);
+
+            return `
+            <div class="card" data-neg="${p.neg}">
+              <a href="${p.link}">
+                <img src="${p.capa}" alt="${p.titulo}" class="thumb" />
+              </a>
+              <div class="card-body">
+                <span class="badge">${
+                  p.neg === "venda" ? "Venda" : "Aluguel"
+                }</span>
+                <h3><a href="${p.link}">${p.titulo}</a></h3>
+                <p class="meta">${p.bairro} • ${p.tipo}</p>
+                <div class="features">
+                  ${features.join(" • ")}
+                </div>
+                <div class="price">${formattedPrice}</div>
+                <div class="card-actions">
+                  <a href="https://wa.me/message/EKYITSLUSBTZG1?text=Tenho interesse no imóvel: ${
+                    p.titulo
+                  }" class="btn btn-primary" target="_blank">WhatsApp</a>
+                </div>
+              </div>
+            </div>
+          `;
+          })
+          .join("");
+      }
+
+      // Filter properties by type (venda/aluguel)
+      function filterProperties(type) {
+        const buttons = document.querySelectorAll(".tab-btn");
+        buttons.forEach((btn) => btn.classList.remove("active"));
+        event.target.classList.add("active");
+
+        const cards = document.querySelectorAll(".card");
+        cards.forEach((card) => {
+          if (type === "all" || card.getAttribute("data-neg") === type) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

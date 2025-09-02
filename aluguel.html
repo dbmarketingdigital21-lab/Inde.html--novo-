@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Imóveis para Aluguel - Favoritta Imóveis</title>
+    <head>
+      <!-- Outras tags aqui... -->
+
+      <!-- LINK DO FONT AWESOME (IMPORTANTE PARA OS ÍCONES) -->
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      />
+
+     
+    <style>
+      /* ===== Theme: Preto + Dourado ===== */
+      :root {
+        --bg: #0b0b0c;
+        --bg-alt: #121214;
+        --text: #e9e9ec;
+        --muted: #b1b1b8;
+        --gold: #d4af37;
+        --gold-2: #c49b1f;
+        --card: #17171a;
+        --stroke: #232327;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      a {
+        color: inherit;
+      }
+
+      /* Layout */
+      .container {
+        width: min(1120px, 92%);
+        margin: 0 auto;
+      }
+      .section {
+        padding: 48px 0;
+      }
+      .section.alt {
+        background: #0f0f11;
+        border-top: 1px solid var(--stroke);
+        border-bottom: 1px solid var(--stroke);
+      }
+      .section-head {
+        text-align: center;
+        margin-bottom: 18px;
+      }
+      .section-head h2 {
+        margin: 0 0 6px;
+        font-size: clamp(22px, 3vw, 32px);
+      }
+      .section-head p {
+        color: var(--muted);
+      }
+      .muted {
+        color: var(--muted);
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 18px;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        text-decoration: none;
+        color: #111;
+        background: var(--gold);
+        font-weight: 700;
+        transition: transform 0.15s ease, opacity 0.2s ease,
+          background 0.2s ease;
+        cursor: pointer;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+      .btn-outline {
+        background: transparent;
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .btn-ghost {
+        background: transparent;
+        border-color: var(--stroke);
+        color: var(--text);
+      }
+      .btn-primary {
+        background: var(--gold);
+        color: #111;
+      }
+
+      /* Header / Nav */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(8px);
+        background: color-mix(in oklab, var(--bg), transparent 35%);
+        border-bottom: 1px solid var(--stroke);
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+      }
+      .logo-mark {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--gold), var(--gold-2));
+        color: #111;
+        font-weight: 900;
+      }
+      .logo-text strong {
+        color: var(--gold);
+      }
+
+      .menu {
+        list-style: none;
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+      }
+      .menu a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        padding: 10px 12px;
+        border-radius: 8px;
+      }
+      .menu a:hover,
+      .menu a.active {
+        background: var(--card);
+      }
+      .has-sub {
+        position: relative;
+      }
+      .sub {
+        position: absolute;
+        top: 110%;
+        left: 0;
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-radius: 12px;
+        padding: 8px;
+        display: none;
+        min-width: 180px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      }
+      .has-sub:hover .sub {
+        display: block;
+      }
+      .sub li {
+        list-style: none;
+      }
+      .sub a {
+        display: block;
+        padding: 10px 12px;
+      }
+
+      /* Hero */
+      .hero {
+        background: radial-gradient(
+            1200px 600px at 10% -10%,
+            rgba(212, 175, 55, 0.15),
+            transparent 60%
+          ),
+          radial-gradient(
+            1200px 600px at 110% 10%,
+            rgba(212, 175, 55, 0.12),
+            transparent 60%
+          ),
+          var(--bg-alt);
+        border-bottom: 1px solid var(--stroke);
+      }
+      .hero-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 60px 0;
+      }
+      .hero h1 {
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.1;
+        margin: 0 0 8px;
+      }
+      .hero p {
+        color: var(--muted);
+        margin: 0 0 20px;
+        max-width: 600px;
+      }
+      .hero-contact {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .hero-contact .phone {
+        color: var(--gold);
+        font-weight: 800;
+        text-decoration: none;
+        background: rgba(212, 175, 55, 0.1);
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--gold);
+      }
+
+      /* Cards */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-radius: 14px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .thumb {
+        background: linear-gradient(135deg, #26262b, #1a1a1f);
+        height: 200px;
+        display: block;
+        width: 100%;
+        object-fit: cover;
+      }
+      .card-body {
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .card h3 {
+        margin: 6px 0;
+        font-size: 1rem;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 0;
+      }
+      .features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: var(--gold);
+        color: #111;
+        font-weight: 600;
+        font-size: 0.75rem;
+      }
+      .badge.alt {
+        background: #2dd4bf;
+        color: #0b0b0c;
+      }
+      .price {
+        font-weight: 800;
+        color: var(--gold);
+        margin-top: 4px;
+      }
+      .card-actions {
+        margin-top: 10px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      /* Footer */
+      .site-footer {
+        border-top: 1px solid var(--stroke);
+        background: #0a0a0b;
+        padding: 40px 0 20px;
+      }
+      .footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: space-between;
+      }
+      .footer-col {
+        flex: 1;
+        min-width: 250px;
+      }
+      .footer-col h3 {
+        color: var(--gold);
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+      }
+      .footer-col p,
+      .footer-col a {
+        color: var(--muted);
+        margin-bottom: 8px;
+        display: block;
+        text-decoration: none;
+      }
+      .footer-col a:hover {
+        color: var(--gold);
+      }
+      .footer-socials {
+        display: flex;
+        gap: 12px;
+        margin-top: 15px;
+      }
+      .footer-socials a {
+        color: var(--gold);
+        text-decoration: none;
+        font-size: 1.5rem;
+      }
+      .footer-bottom {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid var(--stroke);
+        text-align: center;
+        width: 100%;
+      }
+
+      /* Map */
+      .footer-map {
+        height: 150px;
+        background: var(--card);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .footer-map iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* WhatsApp Float */
+      .whatsapp-float {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        width: 56px;
+        height: 56px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background: var(--gold);
+        color: #111;
+        border: 1px solid var(--gold-2);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        text-decoration: none;
+        z-index: 60;
+      }
+
+      /* Responsive */
+      @media (max-width: 920px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+        }
+        .cards {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .footer-inner {
+          flex-direction: column;
+          gap: 30px;
+        }
+      }
+      @media (max-width: 600px) {
+        .menu {
+          gap: 8px;
+        }
+        .menu a {
+          padding: 8px 8px;
+        }
+        .cards {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <!-- SUBSTITUIR LOGO AQUI -->
+        <div class="logo">
+          <span class="logo-mark">F</span>
+          <span class="logo-text">Favoritta <strong>Imóveis</strong></span>
+        </div>
+        <nav class="nav">
+          <ul class="menu">
+            <li><a href="index.html">Início</a></li>
+            <li class="has-sub">
+              <a href="aluguel.html" class="active">Imóveis</a>
+              <ul class="sub">
+                <li><a href="venda.html">Venda</a></li>
+                <li><a href="aluguel.html">Aluguel</a></li>
+              </ul>
+            </li>
+            <li><a href="anuncie.html">Anuncie seu Imóvel</a></li>
+            <li><a href="contato.html">Contato</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section id="inicio" class="hero">
+      <div class="container hero-inner">
+        <h1>Imóveis para Aluguel</h1>
+        <p>
+          Encontre o <strong>lugar perfeito</strong> para morar com a Favoritta
+          Imóveis.
+        </p>
+        <div class="hero-contact">
+          <a class="phone" href="tel:+5561995924869">📞 (61) 9 9592-4869</a>
+          <a
+            class="btn btn-primary"
+            href="https://wa.me/message/EKYITSLUSBTZG1"
+            target="_blank"
+            rel="noopener"
+            >WhatsApp</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section id="imoveis" class="section">
+      <div class="container">
+        <header class="section-head">
+          <h2>Imóveis Disponíveis para Aluguel</h2>
+          <p>Confira nossas melhores oportunidades para locação.</p>
+        </header>
+        <div class="cards" id="cards-container">
+          <!-- Imóvel 1 -->
+          <article class="card">
+            <!-- SUBSTITUIR IMAGEM AQUI -->
+            <img
+              class="thumb"
+              src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80"
+              alt="Loja de esquina – Águas Claras"
+            />
+            <div class="card-body">
+              <span class="badge alt">Aluguel</span>
+              <h3>Loja de esquina – Águas Claras</h3>
+              <p class="meta">Águas Claras • 45 m²</p>
+              <p class="meta">Ponto excelente, grande fluxo de pessoas.</p>
+              <div class="features">
+                <span>🛁 1</span>
+              </div>
+              <p class="price">R$ 2.500/mês</p>
+              <div class="card-actions">
+                <a class="btn btn-outline" href="loja-aguas-claras.html"
+                  >Ver detalhes</a
+                >
+                <a
+                  class="btn btn-primary"
+                  target="_blank"
+                  rel="noopener"
+                  href="https://wa.me/message/EKYITSLUSBTZG1"
+                  >WhatsApp</a
+                >
+              </div>
+            </div>
+          </article>
+
+          <!-- Imóvel 2 -->
+          <article class="card">
+            <!-- SUBSTITUIR IMAGEM AQUI -->
+            <img
+              class="thumb"
+              src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80"
+              alt="Apartamento mobiliado - Asa Norte"
+            />
+            <div class="card-body">
+              <span class="badge alt">Aluguel</span>
+              <h3>Apartamento mobiliado - Asa Norte</h3>
+              <p class="meta">Asa Norte • 62 m²</p>
+              <p class="meta">Próximo ao metrô, com acabamento de qualidade.</p>
+              <div class="features">
+                <span>🛏 2q</span>
+                <span>🛁 1</span>
+                <span>🚗 1</span>
+              </div>
+              <p class="price">R$ 3.200/mês</p>
+              <div class="card-actions">
+                <a class="btn btn-outline" href="apartamento-asa-norte.html"
+                  >Ver detalhes</a
+                >
+                <a
+                  class="btn btn-primary"
+                  target="_blank"
+                  rel="noopener"
+                  href="https://wa.me/message/EKYITSLUSBTZG1"
+                  >WhatsApp</a
+                >
+              </div>
+            </div>
+          </article>
+
+          <!-- Imóvel 3 -->
+          <article class="card">
+            <!-- SUBSTITUIR IMAGEM AQUI -->
+            <img
+              class="thumb"
+              src="https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80"
+              alt="Casa com piscina - Lago Norte"
+            />
+            <div class="card-body">
+              <span class="badge alt">Aluguel</span>
+              <h3>Casa com piscina - Lago Norte</h3>
+              <p class="meta">Lago Norte • 380 m²</p>
+              <p class="meta">Ambiente sofisticado, perfeito para eventos.</p>
+              <div class="features">
+                <span>🛏 5q</span>
+                <span>🛁 4</span>
+                <span>🚗 4</span>
+              </div>
+              <p class="price">R$ 12.500/mês</p>
+              <div class="card-actions">
+                <a class="btn btn-outline" href="casa-lago-norte.html"
+                  >Ver detalhes</a
+                >
+                <a
+                  class="btn btn-primary"
+                  target="_blank"
+                  rel="noopener"
+                  href="https://wa.me/message/EKYITSLUSBTZG1"
+                  >WhatsApp</a
+                >
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== INÍCIO DO RODAPÉ - COPIAR A PARTIR DAQUI ===== -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <div class="footer-col">
+            <h3>Favoritta Imóveis</h3>
+            <p>Encontre o imóvel dos seus sonhos com a gente!</p>
+            <div class="footer-socials">
+              <!-- Instagram -->
+              <a
+                href="https://www.instagram.com/favorittaimoveisdf"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <!-- Facebook -->
+              <a
+                href="https://www.facebook.com/profile.php?id=61556685129294"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fab fa-facebook"></i>
+              </a>
+              <!-- WhatsApp -->
+              <a
+                href="https://wa.me/message/EKYITSLUSBTZG1"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h3>Contato</h3>
+            <p><i class="fas fa-phone"></i> (61) 9 9592-4869</p>
+            <p><i class="fas fa-phone"></i> (61) 3441-4000</p>
+            <p><i class="fab fa-whatsapp"></i> WhatsApp</p>
+            <p><i class="fas fa-envelope"></i> favorittaimoveis.df@gmail.com</p>
+          </div>
+
+          <div class="footer-col">
+            <h3>Horário de Atendimento</h3>
+            <p><i class="fas fa-clock"></i> Segunda a Sexta: 09:00 às 17:00</p>
+            <p><i class="fas fa-clock"></i> Sábado: 09:00 às 12:00</p>
+          </div>
+
+          <div class="footer-col">
+            <h3>Localização</h3>
+            <p>
+              <i class="fas fa-map-marker-alt"></i> Av. Central, 1226 - SALA 201
+            </p>
+            <p>Núcleo Bandeirante, Brasília - DF</p>
+            <div class="footer-map">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d245795.5201539936!2d-48.11710134999999!3d-15.721275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a3d18df9ae275%3A0x738470e469754a24!2zQnJhc8OtbGlhLCBERg!5e0!3m2!1spt-BR!2sbr!4v1653933513338!5m2!1spt-BR!2sbr"
+                allowfullscreen=""
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            © <span id="year"></span> Favoritta Imóveis — Todos os direitos
+            reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a
+      href="https://wa.me/message/EKYITSLUSBTZG1"
+      class="whatsapp-float"
+      target="_blank"
+      rel="noopener"
+      aria-label="WhatsApp"
+    >
+      <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+      // Footer year - Este código deve ser adicionado em todas as páginas
+      document.addEventListener("DOMContentLoaded", function () {
+        const y = document.getElementById("year");
+        if (y) y.textContent = new Date().getFullYear();
+      });
+    </script>
+  </body>
+</html>
